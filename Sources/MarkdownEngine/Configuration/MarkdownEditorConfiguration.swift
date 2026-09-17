@@ -157,7 +157,7 @@ public struct MarkdownEditorConfiguration: Sendable {
 
 // MARK: - Spell checking
 
-/// Initial state for the three "Spelling and Grammar" toggles. Only consulted
+/// Initial text-checking and substitution state. Only consulted
 /// at `makeNSView` time; afterwards the user's context-menu choices take
 /// precedence and are surfaced via ``NativeTextViewWrapper/onSpellCheckingPolicyChanged``.
 public struct SpellCheckingPolicy: Sendable {
@@ -167,15 +167,19 @@ public struct SpellCheckingPolicy: Sendable {
     public var grammarChecking: Bool
     /// Mirrors `NSTextView.isAutomaticSpellingCorrectionEnabled`.
     public var automaticSpellingCorrection: Bool
+    /// Mirrors `NSTextView.isAutomaticQuoteSubstitutionEnabled`.
+    public var automaticQuoteSubstitution: Bool
 
     public init(
         continuousSpellChecking: Bool = true,
         grammarChecking: Bool = true,
-        automaticSpellingCorrection: Bool = true
+        automaticSpellingCorrection: Bool = true,
+        automaticQuoteSubstitution: Bool = true
     ) {
         self.continuousSpellChecking = continuousSpellChecking
         self.grammarChecking = grammarChecking
         self.automaticSpellingCorrection = automaticSpellingCorrection
+        self.automaticQuoteSubstitution = automaticQuoteSubstitution
     }
 
     public static let `default` = SpellCheckingPolicy()

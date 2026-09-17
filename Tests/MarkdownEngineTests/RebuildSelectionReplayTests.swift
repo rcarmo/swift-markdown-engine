@@ -76,7 +76,20 @@ struct RebuildSelectionReplayTests {
         #expect(coord.cachedSpellingDisabled == expectedDisabled)   // the replay ran
         #expect(tv.isContinuousSpellCheckingEnabled
                 == (expectedDisabled ? false : coord.userPrefersContinuousSpellChecking))
-        #expect(tv.isAutomaticQuoteSubstitutionEnabled == !expectedDisabled)
+        #expect(tv.isAutomaticQuoteSubstitutionEnabled
+                == (expectedDisabled ? false : coord.userPrefersAutomaticQuoteSubstitution))
+    }
+
+    @Test func rebuildPreservesStraightQuotesWhenAutomaticSubstitutionIsDisabled() {
+        let (coord, tv) = makeEditor()
+        coord.userPrefersAutomaticQuoteSubstitution = false
+        tv.isAutomaticQuoteSubstitutionEnabled = false
+        let source = "A \"quoted\" word, `let value = \"literal\"`, and [link](local.md \"title\").\n"
+
+        coord.rebuildTextStorageAndStyle(tv, from: source)
+
+        #expect(tv.string == source)
+        #expect(!tv.isAutomaticQuoteSubstitutionEnabled)
     }
 
     // The guard is scoped to the rebuild only — a genuine caret move afterwards must

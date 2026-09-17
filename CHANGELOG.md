@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `SpellCheckingPolicy.automaticQuoteSubstitution` lets embedders disable
+  AppKit smart quotes without changing spelling or grammar preferences.
 - **Directive seam (parsing)**: opt-in named inline commands with typed
   arguments, for constructs that need a name and parameters rather than
   delimiters. A `MarkdownDirective` declares a name, a form — self-contained
